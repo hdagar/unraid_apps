@@ -1,14 +1,9 @@
-# SWAMI - Unraid App Development
+# unraid_apps
 
-This repo contains all files for developing SWAMI as an Unraid template and Docker app.
+This repo contains the **public Unraid templates and resources** for SWAMI.
 
-- `Dockerfile` and `requirements.txt` define the container.
-- `swami.py` is the main application script.
-- `templates/swami.xml` is the Unraid XML template (with variable for public promotion).
-- `icons/swami-icon.png` is the app icon for Unraid templates.
-- `promote_to_public.sh` automates preparing a public-ready version of the template.
+- `templates/swami.xml` – The Unraid App XML template (ready for end users)
+- `icons/swami-icon.png` – App icon
+- `README.md`, `Dockerfile`, `swami.py` – Public docs, Docker build, and source code
 
-## Workflow
-
-- Develop and build locally in this repo.
-- When ready, use `promote_to_public.sh` to update/copy public assets to `unraid-apps` with correct DockerHub reference.
+_If you are developing the app, use the `unraid_dev` repo. When ready to publish, run `promote_to_public.sh` in the dev repo to sync the latest template and assets here, ensuring DockerHub and all GitHub links point to the public versions._
