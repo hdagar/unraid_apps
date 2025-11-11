@@ -1,113 +1,45 @@
 <?xml version="1.0"?>
-<Container>
+<Container version="2">
   <Name>SWAMI</Name>
   <Repository>hetain/swami:latest</Repository>
+  <Registry>https://hub.docker.com/r/hetain/swami</Registry>
   <Network>bridge</Network>
+  <MyIP/>
   <Shell>bash</Shell>
   <Privileged>false</Privileged>
-  <WebUI>http://[IP]:[PORT:1050]</WebUI>
-  <Icon>https://raw.githubusercontent.com/hdagar/unraid_apps/main/icons/swami-icon.png</Icon>
   <Support>https://github.com/hdagar/unraid_apps/issues</Support>
   <Project>https://github.com/hdagar/unraid_apps</Project>
-  <Overview>
-    SWAMI is a lightweight, super-fast, browser-based catalogue for your Movies directory. 
-    No media scraping, instant filters, and one-click updating. 
-    Perfect for browsing on Unraid without using your media front end!
-  </Overview>
-  <Description>
-    <br><b>What is SWAMI?</b>
-    <br>
-    SWAMI is a Docker-ready web UI for instant, filterable browsing of your Movies folder on Unraid (or any system).
-    <ul>
-      <li>Zero scraping—catalogue is built from file/folder names only.</li>
-      <li>Safe: never writes or modifies your Movies share.</li>
-      <li>One-click update. Dark/light mode. Filter by year, quality, keyword.</li>
-    </ul>
-    <br>
-    <b>Quick Start:</b>
-    <ol>
-      <li>Set the path to your Movies folder below (do NOT put your actual Movies folder in appdata).</li>
-      <li>Leave <i>SWAMI Config Folder</i> as the default (<code>/mnt/cache/docker/appdata/swami</code>).</li>
-      <li>Adjust filter/label options if you wish (see field descriptions below).</li>
-      <li>Open WebUI after starting the container. That's it!</li>
-    </ol>
-    <b>Documentation &amp; Example use:</b> See the README at <a href="https://github.com/hdagar/unraid_apps" target="_blank">https://github.com/hdagar/unraid_apps</a>
-  </Description>
-  <Config>
-    <Path>
-      <Name>SWAMI Config Folder</Name>
-      <Target>/mnt/cache/docker/appdata/swami</Target>
-      <Description>
-        SWAMI stores its config in the <b>/data</b> folder inside the container (default is the SWAMI docker appdata folder).
-        This should point to a path on your Unraid server such as <code>/mnt/cache/docker/appdata/swami</code> or <code>/mnt/user/appdata/swami</code> for persistent settings, scan files, etc.
-      </Description>
-      <Mode>rw</Mode>
-      <ContainerDir>/data</ContainerDir>
-    </Path>
-    <Path>
-      <Name>HOST path to Movies folder</Name>
-      <Target>/mnt/user/Movies</Target>
-      <Description>
-        Path on your host to your Movies folder / share.<br>
-        <b>READ ONLY permissions.</b>
-      </Description>
-      <Mode>ro</Mode>
-      <ContainerDir>/mnt/user/Movies</ContainerDir>
-    </Path>
-    <Variable>
-      <Name>MOVIE_PATH</Name>
-      <Label>Movies path inside container (MOVIE_PATH)</Label>
-      <Default>/mnt/user/Movies</Default>
-      <Description>
-        Path inside the container where your Movies folder is accessible.<br>
-        <b>Default is <code>/mnt/user/Movies</code>. This must match the container path from your Movies folder mapping above.</b><br>
-        Only change this if you remap your Movies folder to a different path inside the container.
-      </Description>
-    </Variable>
-    <Variable>
-      <Name>CATALOG_PATH</Name>
-      <Label>SWAMI Catalogue Path (CATALOG_PATH)</Label>
-      <Default>/data</Default>
-      <Description>
-        Where SWAMI will store its data.<br>
-        <b>Must match container path value in "SWAMI Config Folder".</b>
-      </Description>
-    </Variable>
-    <Variable>
-      <Name>FILTER_LABELS</Name>
-      <Label>UI Filters (comma separated)</Label>
-      <Default>BluRay,UHD 4K,1080p,720p</Default>
-      <Description>
-        The filters you want defined. Comma-separated. <b>CAUTION:</b> Suggest a maximum of 6 for usability.<br>
-        Example: <code>BluRay,UHD 4K,1080p,720p</code>
-      </Description>
-    </Variable>
-    <Variable>
-      <Name>REMOVE_LABELS</Name>
-      <Label>Ignored/Filter Labels (comma separated)</Label>
-      <Default>01BluRay,02UHD4K,.stfolder</Default>
-      <Description>
-        Comma-separated list. Anything with these as part of the file or directory name will be filtered out from appearing in the catalogue.<br>
-        Example: <code>01BluRay,02UHD4K,.stfolder</code>
-      </Description>
-    </Variable>
-    <Variable>
-      <Name>FLASK_PORT</Name>
-      <Label>Flask Web Server Port (FLASK_PORT)</Label>
-      <Default>1050</Default>
-      <Description>
-        The port SWAMI's Flask web server will listen on inside the container.<br>
-        <b>Default here is <code>1050</code> for Unraid. In the Dockerfile, the default is <code>5000</code>, but this will be <b>overridden</b> by this template setting.</b><br>
-        If you change this, make sure the "Container Port" in the port mapping below matches. 
-        <br>Unless you have a port conflict, you can leave this as <code>1050</code>.
-      </Description>
-    </Variable>
-    <Port>
-      <ContainerPort>1050</ContainerPort>
-      <HostPort>1050</HostPort>
-      <Protocol>tcp</Protocol>
-      <Description>WebUI</Description>
-    </Port>
-  </Config>
+  <Overview>SWAMI is a lightweight, browser-based catalogue for your Movies directory. No scraping, instant filters, and one-click updates.</Overview>
+  <Category>MediaApp: Video</Category>
+  <WebUI>http://[IP]:[PORT:5000]</WebUI>
+  <TemplateURL/>
+  <Icon>https://raw.githubusercontent.com/hdagar/unraid_apps/main/icons/swami-icon.png</Icon>
+  <ExtraParams/>
+  <PostArgs/>
+  <CPUset/>
+  <DonateText/>
+  <DonateLink/>
+  <Requires/>
+  <DateInstalled/>
+  <TailscaleStateDir/>
+
+  <!-- Paths -->
+  <Config Name="SWAMI Config Folder" Target="/data" Default="/mnt/cache/docker/appdata/swami" Mode="rw" Description="Persistent config/data folder for SWAMI" Type="Path" Display="always" Required="true" Mask="false">/mnt/cache/docker/appdata/swami</Config>
+
+  <Config Name="HOST path to Movies folder" Target="/mnt/user/Movies" Default="/mnt/user/Movies" Mode="ro" Description="Your Movies folder (read-only)" Type="Path" Display="always" Required="true" Mask="false">/mnt/user/Movies</Config>
+
+  <!-- Ports -->
+  <Config Name="Web Interface" Target="5000" Default="1050" Mode="tcp" Description="Port for SWAMI web UI - choose a free/unused port" Type="Port" Display="always" Required="true" Mask="false">1050</Config>
+
+  <!-- Variables -->
+  <Config Name="MOVIE_PATH" Target="MOVIE_PATH" Default="/mnt/user/Movies" Mode="" Description="Path inside container to Movies folder" Type="Variable" Display="always" Required="true" Mask="false">/mnt/user/Movies</Config>
+
+  <Config Name="CATALOG_PATH" Target="CATALOG_PATH" Default="/data" Mode="" Description="Where SWAMI stores its catalogue files" Type="Variable" Display="always" Required="true" Mask="false">/data</Config>
+
+  <Config Name="FILTER_LABELS" Target="FILTER_LABELS" Default="BluRay,UHD 4K,1080p,720p" Mode="" Description="UI filter labels (comma-separated)" Type="Variable" Display="always" Required="false" Mask="false">BluRay,UHD 4K,1080p,720p</Config>
+
+  <Config Name="REMOVE_LABELS" Target="REMOVE_LABELS" Default="01BluRay,02UHD4K,.stfolder" Mode="" Description="Labels to ignore (comma-separated)" Type="Variable" Display="always" Required="false" Mask="false">01BluRay,02UHD4K,.stfolder</Config>
+
+  <Config Name="FLASK_PORT" Target="FLASK_PORT" Default="5000" Mode="" Description="You shouldnt need to change this. Internal Flask port (matches port mapping)" Type="Variable" Display="advanced" Required="false" Mask="false">5000</Config>
+
 </Container>
-<!-- Use promote_to_public.sh to replace placeholders for public release -->
