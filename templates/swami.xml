@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<Container version="2">
+<Container version="3">
   <Name>SWAMI</Name>
   <Repository>hetain/swami:latest</Repository>
   <Registry>https://hub.docker.com/r/hetain/swami</Registry>
@@ -9,7 +9,7 @@
   <Privileged>false</Privileged>
   <Support>https://github.com/hdagar/unraid_apps/issues</Support>
   <Project>https://github.com/hdagar/unraid_apps</Project>
-  <Overview>SWAMI is a lightweight, browser-based catalogue for your Movies directory. No scraping, instant filters, and one-click updates.</Overview>
+  <Overview>SWAMI is a lightweight, browser-based catalogue for your Movies directory. No scraping, instant filters, and one-click updates. Setup with READ ONLY access to your library</Overview>
   <Category>MediaApp: Video</Category>
   <WebUI>http://[IP]:[PORT:5000]</WebUI>
   <TemplateURL/>
@@ -29,17 +29,17 @@
   <Config Name="HOST path to Movies folder" Target="/mnt/user/Movies" Default="/mnt/user/Movies" Mode="ro" Description="Your Movies folder (read-only)" Type="Path" Display="always" Required="true" Mask="false">/mnt/user/Movies</Config>
 
   <!-- Ports -->
-  <Config Name="Web Interface" Target="5000" Default="1050" Mode="tcp" Description="Port for SWAMI web UI - choose a free/unused port" Type="Port" Display="always" Required="true" Mask="false">1050</Config>
+  <Config Name="Web Interface" Target="5000" Default="1050" Mode="tcp" Description="Port for SWAMI web UI. Choose a free/unused port" Type="Port" Display="always" Required="true" Mask="false">1050</Config>
 
   <!-- Variables -->
-  <Config Name="MOVIE_PATH" Target="MOVIE_PATH" Default="/mnt/user/Movies" Mode="" Description="Path inside container to Movies folder" Type="Variable" Display="always" Required="true" Mask="false">/mnt/user/Movies</Config>
+  <Config Name="MOVIE_PATH" Target="MOVIE_PATH" Default="/mnt/user/Movies" Mode="" Description="Must be the same value set on 'HOST path to Movies folder' for SWAMI to work" Type="Variable" Display="always" Required="true" Mask="false">/mnt/user/Movies</Config>
 
-  <Config Name="CATALOG_PATH" Target="CATALOG_PATH" Default="/data" Mode="" Description="Where SWAMI stores its catalogue files" Type="Variable" Display="always" Required="true" Mask="false">/data</Config>
+  <Config Name="FILTER_LABELS" Target="FILTER_LABELS" Default="BluRay,UHD 4K,1080p,720p" Mode="" Description="UI filter labels (comma-separated). These will be filters that appear in the Web UI" Type="Variable" Display="always" Required="false" Mask="false">BluRay,UHD 4K,1080p,720p</Config>
 
-  <Config Name="FILTER_LABELS" Target="FILTER_LABELS" Default="BluRay,UHD 4K,1080p,720p" Mode="" Description="UI filter labels (comma-separated)" Type="Variable" Display="always" Required="false" Mask="false">BluRay,UHD 4K,1080p,720p</Config>
+  <Config Name="REMOVE_LABELS" Target="REMOVE_LABELS" Default="01BluRay,02UHD4K,.stfolder" Mode="" Description="Labels to ignore (comma-separated). These will remove entries containing these labels from the catalogue" Type="Variable" Display="always" Required="false" Mask="false">01BluRay,02UHD4K,.stfolder</Config>
 
-  <Config Name="REMOVE_LABELS" Target="REMOVE_LABELS" Default="01BluRay,02UHD4K,.stfolder" Mode="" Description="Labels to ignore (comma-separated)" Type="Variable" Display="always" Required="false" Mask="false">01BluRay,02UHD4K,.stfolder</Config>
-
+  <Config Name="CATALOG_PATH" Target="CATALOG_PATH" Default="/data" Mode="" Description="Where SWAMI stores its catalogue files. You shouldnt need to change this variable" Type="Variable" Display="advanced" Required="true" Mask="false">/data</Config>
+  
   <Config Name="FLASK_PORT" Target="FLASK_PORT" Default="5000" Mode="" Description="You shouldnt need to change this. Internal Flask port (matches port mapping)" Type="Variable" Display="advanced" Required="false" Mask="false">5000</Config>
 
 </Container>
