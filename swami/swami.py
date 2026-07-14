@@ -261,28 +261,68 @@ async function loadData() {
 
 // --- STATS / CATEGORY FILTERS ---
 function updateStats(){
-  const total = files.length;
-  const statsArr = [{name:"Total", val:total,cat:null}];
-  categoryFilters.forEach(filt=>{
-    const count = files.filter(f=>f.toLowerCase().includes(filt.toLowerCase())).length;
-    statsArr.push({name:filt, val:count, cat:filt.toLowerCase()});
-  });
-  const other = total - statsArr.slice(1).reduce((sum,s)=>sum+s.val,0);
-  statsArr.push({name:"Other", val:other, cat:"other"});
-  statsDiv.innerHTML="";
-  statsArr.forEach(s=>{
-    const b=document.createElement('button');
-    b.textContent=`${s.name}: ${s.val}`;
-    if(s.cat) b.className="stat";
-    if(currentCategoryFilter===s.cat) b.classList.add("active");
-    if(s.cat) b.dataset.cat=s.cat;
-    b.addEventListener('click',()=>{
-      currentCategoryFilter=(currentCategoryFilter===b.dataset.cat)?null:b.dataset.cat;
-      render();
-      updateStats();
+
+    const total = files.length;
+
+    const statsArr = [{name:"Total", val:total, cat:null}];
+
+    // Keep track of every movie matched by ANY category
+    const matched = new Set();
+
+    categoryFilters.forEach(filt=>{
+
+        const matches = files.filter(f =>
+            f.name.toLowerCase().includes(filt.toLowerCase())
+        );
+
+        matches.forEach(m => matched.add(m.name));
+
+        statsArr.push({
+            name:filt,
+            val:matches.length,
+            cat:filt.toLowerCase()
+        });
+
     });
-    statsDiv.appendChild(b);
-  });
+
+    statsArr.push({
+        name:"Other",
+        val:total - matched.size,
+        cat:"other"
+    });
+
+    statsDiv.innerHTML="";
+
+    statsArr.forEach(s=>{
+
+        const b=document.createElement('button');
+
+        b.textContent=`${s.name}: ${s.val}`;
+
+        if(s.cat) b.className="stat";
+
+        if(currentCategoryFilter===s.cat)
+            b.classList.add("active");
+
+        if(s.cat)
+            b.dataset.cat=s.cat;
+
+        b.addEventListener('click',()=>{
+
+            currentCategoryFilter =
+                (currentCategoryFilter===b.dataset.cat)
+                    ? null
+                    : b.dataset.cat;
+
+            render();
+            updateStats();
+
+        });
+
+        statsDiv.appendChild(b);
+
+    });
+
 }
 
 // --- ALPHABET BAR / INDEX FILTER ---
@@ -310,19 +350,30 @@ function render(q=search.value){
     if(currentCategoryFilter==="other")
       filtered=filtered.filter(f=>{
         // Not matching *any* category filter
-        return !categoryFilters.some(cat=>f.toLowerCase().includes(cat.toLowerCase()));
+        return !categoryFilters.some(cat=>f.name.toLowerCase().includes(cat.toLowerCase()));
       });
     else
-      filtered=filtered.filter(f=>f.toLowerCase().includes(currentCategoryFilter));
+      filtered=filtered.filter(f=>f.name.toLowerCase().includes(currentCategoryFilter));
   }
   if(currentIndexFilter){
-    if(currentIndexFilter==="0-9") filtered=filtered.filter(f=>/^[0-9]/.test(f));
-    else filtered=filtered.filter(f=>f.toUpperCase().startsWith(currentIndexFilter));
+    if(currentIndexFilter==="0-9") filtered=filtered.filter(f=>/^[0-9]/.test(f.name));
+    else filtered=filtered.filter(f=>f.name.toUpperCase().startsWith(currentIndexFilter));
   }
-  if(q) filtered=filtered.filter(f=>f.toLowerCase().includes(q.toLowerCase()));
+  if(q) filtered=filtered.filter(f=>f.name.toLowerCase().includes(q.toLowerCase()));
   filtered.slice(0,200).forEach(f=>{
-    const li=document.createElement('li'); li.textContent=f; results.appendChild(li);
-  });
+
+    const li = document.createElement('li');
+
+    li.innerHTML = `
+        <span>${f.name}</span>
+        <span style="float:right;color:#888;font-size:0.9em;">
+            ${f.size}
+        </span>
+    `;
+
+    results.appendChild(li);
+
+});
 }
 
 // --- EVENT LISTENERS ---
