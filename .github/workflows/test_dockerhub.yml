@@ -1,0 +1,14 @@
+name: Test Docker Hub Connection
+
+on:
+  workflow_dispatch: # Allows you to trigger the test manually from the GitHub UI
+
+jobs:
+  test-login:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
