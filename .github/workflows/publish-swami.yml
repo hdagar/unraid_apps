@@ -26,5 +26,7 @@ jobs:
           context: ./swami
           file: ./swami/Dockerfile
           push: true
-          tags: hetain/swami:latest
+          tags: |
+            hetain/swami:latest
+          # hetain/swami:${{ github.sha }}
           provenance: false
