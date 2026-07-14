@@ -44,25 +44,88 @@ def latest_catalog_file():
     latest = max(json_files, key=lambda x: os.path.getmtime(os.path.join(OUTPUT_DIR, x)))
     return os.path.join(OUTPUT_DIR, latest)
 
+# ------------------------------------------------------------
+# Convert a file size in bytes to a human-readable string
+# ------------------------------------------------------------
+def human_size(size_bytes):
+    if size_bytes is None:
+        return ""
+
+    units = ["B", "KB", "MB", "GB", "TB"]
+    size = float(size_bytes)
+
+    for unit in units:
+        if size < 1024 or unit == units[-1]:
+            if unit == "B":
+                return f"{int(size)} {unit}"
+            return f"{size:.1f} {unit}"
+        size /= 1024
+
+
 # --- CORE SCANNER ---
 def build_catalog(root):
     catalog = []
-    if not os.path.exists(root):
-        print(f"❌ Movie path {root} does not exist.")
-        return catalog
+
     for entry in os.scandir(root):
+
         if entry.name.lower().startswith("syncthing"):
             continue
-        if not entry.is_dir():
-            catalog.append(entry.name)
+
+        #
+        # FILES IN ROOT
+        #
+        if entry.is_file():
+            stat = entry.stat()
+
+            catalog.append({
+                "name": entry.name,
+                "type": "file",
+                "size_bytes": stat.st_size,
+                "size": human_size(stat.st_size)
+            })
+
             continue
+
+        #
+        # REMOVE_LABEL folders
+        #
         if entry.name in REMOVE_LABELS:
+
             for subentry in os.scandir(entry.path):
-                if subentry.is_file() or subentry.is_dir():
-                    catalog.append(subentry.name)
+
+                if subentry.is_file():
+
+                    stat = subentry.stat()
+
+                    catalog.append({
+                        "name": subentry.name,
+                        "type": "file",
+                        "size_bytes": stat.st_size,
+                        "size": human_size(stat.st_size)
+                    })
+
+                elif subentry.is_dir():
+
+                    catalog.append({
+                        "name": subentry.name,
+                        "type": "folder",
+                        "size_bytes": 0,
+                        "size": ""
+                    })
+
             continue
-        catalog.append(entry.name)
-    return sorted(catalog, key=str.casefold)
+
+        #
+        # Normal folders
+        #
+        catalog.append({
+            "name": entry.name,
+            "type": "folder",
+            "size_bytes": 0,
+            "size": ""
+        })
+
+    return sorted(catalog, key=lambda x: x["name"].casefold())
 
 def run_scan():
     with SCAN_LOCK:
