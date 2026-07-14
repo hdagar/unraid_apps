@@ -34,3 +34,4 @@ jobs:
           file: ./swami/Dockerfile
           push: true
           tags: hetain/swami:latest
+          provenance: false
