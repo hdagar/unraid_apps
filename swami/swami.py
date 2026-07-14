@@ -365,11 +365,11 @@ function render(q=search.value){
     const li = document.createElement('li');
 
     li.innerHTML = `
-        <span>${f.name}</span>
-        <span style="float:right;color:#888;font-size:0.9em;">
-            ${f.size}
-        </span>
-    `;
+    <span>${f.name}</span>
+    <span style="float:right;color:#888;font-size:0.9em;">
+        ${f.type === "folder" ? "📁" : f.size}
+    </span>
+`;
 
     results.appendChild(li);
 
