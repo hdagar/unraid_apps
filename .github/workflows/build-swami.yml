@@ -1,13 +1,6 @@
-name: Build and Publish SWAMI
+name: Publish SWAMI Release
 
 on:
-  push:
-    branches:
-      - main
-    paths:
-      - 'swami/**'
-      - '.github/workflows/build-swami.yml'
-
   workflow_dispatch:
 
 jobs:
