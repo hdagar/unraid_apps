@@ -360,7 +360,7 @@ function render(q=search.value){
     else filtered=filtered.filter(f=>f.name.toUpperCase().startsWith(currentIndexFilter));
   }
   if(q) filtered=filtered.filter(f=>f.name.toLowerCase().includes(q.toLowerCase()));
-  filtered.slice(0,200).forEach(f=>{
+  filtered.forEach(f=>{
 
     const li = document.createElement('li');
 
