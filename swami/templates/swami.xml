@@ -8,12 +8,13 @@
   <Shell>bash</Shell>
   <Privileged>false</Privileged>
   <Support>https://github.com/hdagar/unraid_apps/issues</Support>
-  <Project>https://github.com/hdagar/unraid_apps</Project>
-  <Overview>SWAMI is a lightweight, browser-based catalogue for your Movies directory. No scraping, instant filters, and one-click updates. Setup with READ ONLY access to your library</Overview>
+  <Project>https://github.com/hdagar/unraid_apps/tree/main/swami</Project>
+  <ReadMe>https://github.com/hdagar/unraid_apps/tree/main/swami</ReadMe>
+  <Overview>SWAMI is a lightweight, browser-based catalogue for your movie library. It scans your media folders and provides an instant searchable index with live filtering and one-click library refreshes. No metadata scraping, fully local, and designed to run with read-only access to your media.</Overview>
   <Category>MediaApp: Video</Category>
   <WebUI>http://[IP]:[PORT:5000]</WebUI>
   <TemplateURL/>
-  <Icon>https://raw.githubusercontent.com/hdagar/unraid_apps/main/icons/swami-icon.png</Icon>
+  <Icon>https://raw.githubusercontent.com/hdagar/unraid_apps/main/swami/icons/swami-icon.png</Icon>
   <ExtraParams/>
   <PostArgs/>
   <CPUset/>
@@ -36,10 +37,10 @@
 
   <Config Name="FILTER_LABELS" Target="FILTER_LABELS" Default="BluRay,UHD 4K,1080p,720p" Mode="" Description="UI filter labels (comma-separated). These will be filters that appear in the Web UI" Type="Variable" Display="always" Required="false" Mask="false">BluRay,UHD 4K,1080p,720p</Config>
 
-  <Config Name="REMOVE_LABELS" Target="REMOVE_LABELS" Default="01BluRay,02UHD4K,.stfolder" Mode="" Description="Labels to ignore (comma-separated). These will remove entries containing these labels from the catalogue" Type="Variable" Display="always" Required="false" Mask="false">01BluRay,02UHD4K,.stfolder</Config>
+  <Config Name="REMOVE_LABELS" Target="REMOVE_LABELS" Default="01BluRay,02UHD4K,.stfolder" Mode="" Description="Folder names that should be hidden from the catalogue while still scanning their contents." Type="Variable" Display="always" Required="false" Mask="false">01BluRay,02UHD4K,.stfolder</Config>
 
   <Config Name="CATALOG_PATH" Target="CATALOG_PATH" Default="/data" Mode="" Description="Where SWAMI stores its catalogue files. You shouldnt need to change this variable" Type="Variable" Display="advanced" Required="true" Mask="false">/data</Config>
   
-  <Config Name="FLASK_PORT" Target="FLASK_PORT" Default="5000" Mode="" Description="You shouldnt need to change this. Internal Flask port (matches port mapping)" Type="Variable" Display="advanced" Required="false" Mask="false">5000</Config>
+  <Config Name="FLASK_PORT" Target="FLASK_PORT" Default="5000" Mode="" Description="You shouldn't need to change this. Internal Flask port (matches port mapping)" Type="Variable" Display="advanced" Required="false" Mask="false">5000</Config>
 
 </Container>
