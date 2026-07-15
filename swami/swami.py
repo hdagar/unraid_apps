@@ -175,6 +175,9 @@ def index():
 <link rel="icon" href="/static/favicon.ico" sizes="any">
 <link rel="icon" type="image/png" sizes="32x32" href="/static/favicon-32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/static/favicon-16.png">
+<link rel="apple-touch-icon" href="/static/apple-touch-icon.png">
+<meta name="theme-color" content="#00adee">
+<meta name="application-name" content="SWAMI">
 <title>SWAMI Movie Catalogue Search</title>
 <style>
 body { font-family: Arial, sans-serif; margin: 2rem; background: #181818; color: #f0f0f0; transition: background 0.2s, color 0.2s; }
