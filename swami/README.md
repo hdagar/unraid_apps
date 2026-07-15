@@ -1,5 +1,5 @@
 _____________________________________________________________________________________________________________
-# SWAMI - Simple Web Accessible Movie Interface
+# SWAMI - Simple Web Accessible Movie Index
 
 ## What is SWAMI?
 
