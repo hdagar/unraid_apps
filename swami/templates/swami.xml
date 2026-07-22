@@ -25,7 +25,7 @@
   <TailscaleStateDir/>
 
   <!-- Paths -->
-  <Config Name="SWAMI Config Folder" Target="/data" Default="/mnt/cache/docker/appdata/swami" Mode="rw" Description="Persistent config/data folder for SWAMI" Type="Path" Display="always" Required="true" Mask="false">/mnt/cache/docker/appdata/swami</Config>
+  <Config Name="SWAMI Config Folder" Target="/data" Default="/mnt/cache/appdata/swami" Mode="rw" Description="Persistent config/data folder for SWAMI" Type="Path" Display="always" Required="true" Mask="false">/mnt/cache/docker/appdata/swami</Config>
 
   <Config Name="HOST path to Movies folder" Target="/mnt/user/Movies" Default="/mnt/user/Movies" Mode="ro" Description="Your Movies folder (read-only)" Type="Path" Display="always" Required="true" Mask="false">/mnt/user/Movies</Config>
 
